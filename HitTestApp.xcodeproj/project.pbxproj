@@ -11,6 +11,8 @@
 		6F238936277BD76000CF019F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F238935277BD76000CF019F /* ContentView.swift */; };
 		6F238938277BD76200CF019F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6F238937277BD76200CF019F /* Assets.xcassets */; };
 		6F23893B277BD76200CF019F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6F23893A277BD76200CF019F /* Preview Assets.xcassets */; };
+		6F238943277BD7A600CF019F /* ScenekitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F238942277BD7A600CF019F /* ScenekitView.swift */; };
+		6F238945277BD7E800CF019F /* SetupScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F238944277BD7E800CF019F /* SetupScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +22,8 @@
 		6F238937277BD76200CF019F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6F23893A277BD76200CF019F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		6F23893C277BD76200CF019F /* HitTestApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HitTestApp.entitlements; sourceTree = "<group>"; };
+		6F238942277BD7A600CF019F /* ScenekitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScenekitView.swift; sourceTree = "<group>"; };
+		6F238944277BD7E800CF019F /* SetupScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,11 +56,13 @@
 		6F238932277BD76000CF019F /* HitTestApp */ = {
 			isa = PBXGroup;
 			children = (
+				6F238944277BD7E800CF019F /* SetupScene.swift */,
 				6F238933277BD76000CF019F /* HitTestAppApp.swift */,
 				6F238935277BD76000CF019F /* ContentView.swift */,
 				6F238937277BD76200CF019F /* Assets.xcassets */,
 				6F23893C277BD76200CF019F /* HitTestApp.entitlements */,
 				6F238939277BD76200CF019F /* Preview Content */,
+				6F238942277BD7A600CF019F /* ScenekitView.swift */,
 			);
 			path = HitTestApp;
 			sourceTree = "<group>";
@@ -139,7 +145,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F238943277BD7A600CF019F /* ScenekitView.swift in Sources */,
 				6F238936277BD76000CF019F /* ContentView.swift in Sources */,
+				6F238945277BD7E800CF019F /* SetupScene.swift in Sources */,
 				6F238934277BD76000CF019F /* HitTestAppApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
