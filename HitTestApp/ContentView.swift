@@ -79,6 +79,7 @@ struct ContentView: View {
             VStack {
                 Text("Selected Sphere: \(statusText)")
                     .padding()
+                    .foregroundColor(.white)
                 Spacer()
             }
         }
@@ -89,6 +90,8 @@ struct ContentView: View {
             // Setup the camera - The double tapping will not work with the default SCNView.allowsCameraControl option
             cameraNode = setupCameraNode(scene: scnScene)
             cameraOrbit = setupCameraOrbit(cameraNode: cameraNode, scene: scnScene)
+            
+            scnScene.background.contents = NSColor.black
             
             
             // do other scene setup.. add objects, cameras, lights, etc...
