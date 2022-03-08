@@ -66,9 +66,14 @@ struct ContentView: View {
                             .onEnded({ action in
                                 if let targetNode = self.scnScene.rootNode.childNode(withName: statusText, recursively: true) {
                                     let targetPosition = targetNode.position
-                                    cameraOrbit.removeFromParentNode()
-                                    targetNode.addChildNode(cameraOrbit)
+                                    
+                                    // smoothly transistion to new position
+                                    SCNTransaction.begin()
+                                    SCNTransaction.animationDuration = 1.5
+                                    cameraOrbit.position = targetPosition
                                     cameraNode.look(at: targetPosition)
+                                    SCNTransaction.commit()
+                                    
                                     self.targetNode = targetNode
                                     statusText = targetNode.name ?? ".."
                                 }
@@ -78,9 +83,19 @@ struct ContentView: View {
             
             VStack {
                 Text("Selected Sphere: \(statusText)")
-                    .padding()
-                    .foregroundColor(.white)
+                    .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+                    .foregroundColor(Color(.sRGB, red: 0.8, green: 0.8, blue: 0.8, opacity: 0.5) )
+                    .background(RoundedRectangle(cornerRadius: 16, style: .circular)
+                                    .fill(Color.textBackground))
+                    .padding(EdgeInsets(top: 10, leading: 10, bottom: 0, trailing: 0))
+                
                 Spacer()
+                
+                HStack {
+                    InstructionsView()
+                    Spacer()
+                }
+                .padding()
             }
         }
         
@@ -91,6 +106,7 @@ struct ContentView: View {
             cameraNode = setupCameraNode(scene: scnScene)
             cameraOrbit = setupCameraOrbit(cameraNode: cameraNode, scene: scnScene)
             
+            // your basic black background
             scnScene.background.contents = NSColor.black
             
             

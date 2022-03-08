@@ -1,11 +1,13 @@
 //
 //  StarView.swift
-//  SceneViewSWUITester
+//  HitTestApp
 //
 //  Created by Eric Freitas on 12/24/21.
 //
 //  This is necessary in order to get an SCNView that conforms
 //  to the SCNSceneRenderer protocol, because the SwiftUI SceneView does not.
+//  This is important because there is no way to do hit testing from within
+//  SwiftUI otherwise.  
 
 import SwiftUI
 import SceneKit
