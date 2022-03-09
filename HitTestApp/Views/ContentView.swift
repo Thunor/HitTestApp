@@ -10,17 +10,12 @@ import SceneKit
 
 struct ContentView: View {
     
-    @State private var scnScene = SCNScene()
-    @State private var sceneView: ScenekitView!
-    @State private var cameraNode = SCNNode()
-    @State private var cameraOrbit: SCNNode!
-    @State private var statusText = "..."
-    @State private var targetNode: SCNNode!
+    @StateObject private var viewModel = ContentViewModel()
     
     var body: some View {
         ZStack {
             GeometryReader { geometry in
-                sceneView
+                viewModel.sceneView
                     .allowsHitTesting(true)
                     .simultaneousGesture(
                         // DragGesture that is used to rotate the camera:
@@ -32,8 +27,8 @@ struct ContentView: View {
                                 )
                                 let scrollWidthRatio = CGFloat(velocity.width) / 10000 * -1
                                 let scrollHeightRatio = CGFloat(velocity.height) / 10000
-                                cameraOrbit.eulerAngles.y += CGFloat(2 * CGFloat.pi) * scrollWidthRatio
-                                cameraOrbit.eulerAngles.x += CGFloat(CGFloat.pi) * scrollHeightRatio
+                                viewModel.cameraOrbit.eulerAngles.y += CGFloat(2 * CGFloat.pi) * scrollWidthRatio
+                                viewModel.cameraOrbit.eulerAngles.x += CGFloat(CGFloat.pi) * scrollHeightRatio
                             }
                     )
                     .simultaneousGesture(
@@ -47,13 +42,13 @@ struct ContentView: View {
                                 var startLocation = value.startLocation
                                 // pass the startLocation into the hitTest() method
                                 startLocation.y = geometry.size.height - startLocation.y
-                                let hits = sceneView.view.hitTest(startLocation, options: [:])
+                                let hits = viewModel.sceneView.view.hitTest(startLocation, options: [:])
                                 
                                 if hits.count > 0 {
-                                    statusText = hits.first?.node.name ?? ".."
+                                    viewModel.statusText = hits.first?.node.name ?? ".."
                                     debugPrint("ball: \(hits.first?.node.name ?? "..")")
                                 } else {
-                                    statusText = ".."
+                                    viewModel.statusText = ".."
                                 }
                             })
                     )
@@ -64,25 +59,25 @@ struct ContentView: View {
                         // the cameraOrbit node is set as a child of that node, with a look(at:) constraint to center on the selected ball.
                         TapGesture(count: 2)
                             .onEnded({ action in
-                                if let targetNode = self.scnScene.rootNode.childNode(withName: statusText, recursively: true) {
+                                if let targetNode = self.viewModel.scnScene.rootNode.childNode(withName: viewModel.statusText, recursively: true) {
                                     let targetPosition = targetNode.position
                                     
                                     // smoothly transistion to new position
                                     SCNTransaction.begin()
                                     SCNTransaction.animationDuration = 1.5
-                                    cameraOrbit.position = targetPosition
-                                    cameraNode.look(at: targetPosition)
+                                    viewModel.cameraOrbit.position = targetPosition
+                                    viewModel.cameraNode.look(at: targetPosition)
                                     SCNTransaction.commit()
                                     
-                                    self.targetNode = targetNode
-                                    statusText = targetNode.name ?? ".."
+                                    self.viewModel.targetNode = targetNode
+                                    viewModel.statusText = targetNode.name ?? ".."
                                 }
                             })
                     )
             }
             
             VStack {
-                Text("Selected Sphere: \(statusText)")
+                Text("Selected Sphere: \(viewModel.statusText)")
                     .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
                     .foregroundColor(Color(.sRGB, red: 0.8, green: 0.8, blue: 0.8, opacity: 0.5) )
                     .background(RoundedRectangle(cornerRadius: 16, style: .circular)
@@ -100,18 +95,18 @@ struct ContentView: View {
         }
         
         .onAppear {
-            sceneView = ScenekitView(scene: scnScene)
+            viewModel.sceneView = ScenekitView(scene: viewModel.scnScene)
             
             // Setup the camera - The double tapping will not work with the default SCNView.allowsCameraControl option
-            cameraNode = setupCameraNode(scene: scnScene)
-            cameraOrbit = setupCameraOrbit(cameraNode: cameraNode, scene: scnScene)
+            viewModel.cameraNode = setupCameraNode(scene: viewModel.scnScene)
+            viewModel.cameraOrbit = setupCameraOrbit(cameraNode: viewModel.cameraNode, scene: viewModel.scnScene)
             
             // your basic black background
-            scnScene.background.contents = NSColor.black
+            viewModel.scnScene.background.contents = NSColor.black
             
             
             // do other scene setup.. add objects, cameras, lights, etc...
-            addSpheres(scene: scnScene)
+            addSpheres(scene: viewModel.scnScene)
         }
     }
 }
