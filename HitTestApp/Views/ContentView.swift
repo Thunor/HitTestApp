@@ -10,7 +10,11 @@ import SceneKit
 
 struct ContentView: View {
     
-    @StateObject private var viewModel = ContentViewModel()
+    @StateObject private var viewModel: ContentViewModel
+    
+    init() {
+        self._viewModel = StateObject(wrappedValue: ContentViewModel())
+    }
     
     var body: some View {
         ZStack {
